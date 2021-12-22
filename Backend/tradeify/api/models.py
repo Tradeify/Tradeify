@@ -2,20 +2,18 @@ from djongo import models
 from django import forms
 
 
-class User(models.Model):
+class Profile(models.Model):
     username = models.CharField(max_length=100)
     full_name = models.CharField(max_length=200)
 
-    class Meta:
-        abstract = True
 
     def __str__(self) -> str:
         return f"\nUsername: {self.username}\nFull Name: {self.full_name}"
 
 
-class UserForm(forms.modelForm):
+class ProfileForm(forms.ModelForm):
     class Meta:
-        model = User
+        model = Profile
         fields = (
             'username', 'full_name'
         )
@@ -23,17 +21,13 @@ class UserForm(forms.modelForm):
 
 class Kpi(models.Model):
     ticker = models.CharField(max_length=10)
-    value = models.FloatField
-    Tradenotes = models.ForeignKey(Tradenotes, on_delete=models.CASCADE)
-
-    class Meta:
-        abstract = True
+    value = models.FloatField()
 
     def __str__(self) -> str:
         return f"\nTicker: {self.ticker} \nValue: {self.value}"
 
 
-class KpiForm(forms.modelForm):
+class KpiForm(forms.ModelForm):
     class Meta:
         model = Kpi
         fields = (
@@ -45,18 +39,15 @@ class Trade(models.Model):
     ticker = models.CharField(max_length=10)
     entry_time = models.DateTimeField()
     exit_time = models.DateTimeField()
-    entry_price = models.FloatField
-    exit_price = models.FloatField
-    Tradenotes = models.ForeignKey(Tradenotes, on_delete=models.CASCADE)
+    entry_price = models.FloatField()
+    exit_price = models.FloatField()
 
-    class Meta:
-        abstract = True
 
     def __str__(self) -> str:
         return f"\nTicker: {self.ticker}"
 
 
-class TradeForm(forms.modelForm):
+class TradeForm(forms.ModelForm):
     class Meta:
         model = Trade
         fields = (
@@ -68,16 +59,12 @@ class Media(models.Model):
     media_type = models.CharField(max_length=100)
     media_name = models.CharField(max_length=100)
     media_data = models.CharField(max_length=10000)
-    Tradenotes = models.ForeignKey(Tradenotes, on_delete=models.CASCADE)
-
-    class Meta:
-        abstract = True
 
     def __str__(self) -> str:
         return f"\nMedia: {self.media_name}"
 
 
-class MediaForm(forms.modelForm):
+class MediaForm(forms.ModelForm):
     class Meta:
         model = Media
         fields = (
@@ -93,7 +80,7 @@ class Tradenotes(models.Model):
     last_modified_date = models.DateTimeField()
     created_date = models.DateTimeField()
     emotions = models.CharField(max_length=10)
-    User = models.ForeignKey(User, on_delete=models.CASCADE)
+    Profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     media = models.ArrayField(model_container=Media,
                               model_form_class=MediaForm)
     kpis = models.ArrayField(model_container=Kpi,
@@ -101,5 +88,12 @@ class Tradenotes(models.Model):
     trades = models.ArrayField(model_container=Trade,
                                model_form_class=TradeForm)
 
+
+class TradenotesForm(forms.ModelForm):
+    class Meta:
+        model = Tradenotes
+        fields = (
+            'summary', 'rationale', 'begin_time', 'end_price', 'last_modified', 'last_modefied_date', 'created_date', 'emotions', 'media', 'kpis', 'trades'
+        )
     def __str__(self) -> str:
         return f"\nTradenotes: {self.summary}"

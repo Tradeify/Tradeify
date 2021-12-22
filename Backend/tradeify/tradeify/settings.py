@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'api.apps.ApiConfig',
     'polls.apps.PollsConfig',
     'tradeify',
     'django.contrib.admin',
