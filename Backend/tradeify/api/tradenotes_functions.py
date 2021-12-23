@@ -55,7 +55,7 @@ def get_Tradenote(request, tradenote_id):
         if tradenote_id != 0:
             Tradenotes.objects.get(id=tradenote_id, User__id=request.user.id)
             return JsonResponse({'Tradenote': \
-            TradenoteEncoder().encode(Tradenotes.objects.get(id=tradenote_id, User__id=request.user.id))})
+            json.loads(TradenoteEncoder().encode(Tradenotes.objects.get(id=tradenote_id, User__id=request.user.id)))})
         else:
             return JsonResponse({'message': str('Please provide a valid id')})
     else:
@@ -67,6 +67,6 @@ def get_Tradenote(request, tradenote_id):
 class TradenoteEncoder(JSONEncoder):
     def default(self, o):
         if isinstance(o, datetime):
-            return dict(year=o.year, month=o.month, day=o.day)
+            return o.ctime()
         else:
             return o.__dict__

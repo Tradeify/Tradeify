@@ -3,6 +3,7 @@ from djongo import models
 from django import forms
 from django.contrib.auth.models import User
 from json import JSONEncoder
+from datetime import datetime
 
 #class Profile(models.Model):
     #username = models.CharField(max_length=100)
@@ -31,7 +32,10 @@ class Kpi(models.Model, JSONEncoder):
         return f"\nTicker: {self.ticker} \nValue: {self.value}"
 
     def default(self, o):
-        return o.__dict__
+        if isinstance(o, datetime):
+            return dict(year=o.year, month=o.month, day=o.day)
+        else:
+            return o.__dict__
 
 class KpiForm(forms.ModelForm):
     class Meta:
@@ -55,7 +59,10 @@ class Trade(models.Model, JSONEncoder):
         return f"\nTicker: {self.ticker}"
 
     def default(self, o):
-        return o.__dict__
+        if isinstance(o, datetime):
+            return dict(year=o.year, month=o.month, day=o.day)
+        else:
+            return o.__dict__
 
 
 class TradeForm(forms.ModelForm):
@@ -78,7 +85,10 @@ class Media(models.Model, JSONEncoder):
         return f"\nMedia: {self.media_name}"
 
     def default(self, o):
-        return o.__dict__
+        if isinstance(o, datetime):
+            return dict(year=o.year, month=o.month, day=o.day)
+        else:
+            return o.__dict__
 
 
 class MediaForm(forms.ModelForm):
@@ -123,4 +133,7 @@ class Tradenotes(models.Model, JSONEncoder):
         return f"\nTradenotes: {self.title} - {self.summary}"
     
     def default(self, o):
-        return o.__dict__
+        if isinstance(o, datetime):
+            return dict(year=o.year, month=o.month, day=o.day)
+        else:
+            return o.__dict__
