@@ -1,13 +1,13 @@
 from djongo import models
 from django import forms
+from django.contrib.auth.models import User
 
+#class Profile(models.Model):
+    #username = models.CharField(max_length=100)
+    #full_name = models.CharField(max_length=200)
 
-class Profile(models.Model):
-    username = models.CharField(max_length=100)
-    full_name = models.CharField(max_length=200)
-
-    def __str__(self) -> str:
-        return f"\nUsername: {self.username}\nFull Name: {self.full_name}"
+    #def __str__(self) -> str:
+        #return f"\nUsername: {self.username}\nFull Name: {self.full_name}"
 
 
 # class ProfileForm(forms.ModelForm):
@@ -80,6 +80,7 @@ class MediaForm(forms.ModelForm):
 
 
 class Tradenotes(models.Model):
+    User = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     summary = models.CharField(max_length=1000)
     rationale = models.CharField(max_length=1000)
     begin_time = models.DateTimeField()
@@ -87,7 +88,7 @@ class Tradenotes(models.Model):
     last_modified_date = models.DateTimeField()
     created_date = models.DateTimeField()
     emotions = models.CharField(max_length=10)
-    Profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    #Profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     media = models.ArrayField(model_container=Media,
                               model_form_class=MediaForm)
     kpis = models.ArrayField(model_container=Kpi,
