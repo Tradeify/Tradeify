@@ -2,6 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.http.response import JsonResponse
 from datetime import datetime
 
+from Backend.tradeify.api.models import Tradenotes
+
 date_Format = '%m/%d/%Y %I:%M%p'
 @login_required
 def create_Tradenote(request):
@@ -31,3 +33,16 @@ def create_Tradenote(request):
             return JsonResponse({'message': str('Empty POST Request Sent')})
     else:
         return JsonResponse({'message': str('ONLY POST REQUESTS ALLOWED')})
+
+
+@login_required
+def edit_Tradenote_Header(request):
+    if request.method == 'POST':
+        if request.POST != {}:
+            if request.POST['id']:
+                if request.POST['title'].strip() \
+                    or request.POST['summary'].strip() \
+                    or request.POST['rationale'].strip() \
+                    or request.POST['begin_time'].strip() \
+                    or request.POST['end_time'].strip() or request.POST['emotions'].strip():
+                        if 
