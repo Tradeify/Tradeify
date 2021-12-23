@@ -1,8 +1,7 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
-from JSON_Response import JSON_Response
 
 
 def Create_User(request):
@@ -23,16 +22,16 @@ def Create_User(request):
                     )
                     a.save() 
                     login(request, a)
-                    res = JSON_Response('{ user: ' + str(User.objects.get(username=request.POST['username'])) + '}')
+                    res = JsonResponse({'user': str(User.objects.get(username=request.POST['username']))})
                     return res
                 else:
-                    return HttpResponse(str('User already exists'))
+                    return JsonResponse({ 'message': str('User already exists')})
             else:
-                return HttpResponse(str('data is incorrect'))
+                return JsonResponse({'message': str('data is incorrect')})
         else:
-            return HttpResponse(str('Empty POST Request Sent'))
+            return JsonResponse({'message': str('Empty POST Request Sent')})
     else:
-        return HttpResponse(str('ONLY POST REQUESTS ALLOWED'))
+        return JsonResponse({'message': str('ONLY POST REQUESTS ALLOWED')})
 
 
 def Login_User(request):
@@ -43,14 +42,14 @@ def Login_User(request):
                     password=request.POST['password'].strip())
                 if user is not None: 
                     login(request, user)
-                    return JSON_Response({'f'username: {user} )
+                    return JsonResponse({'username': str(user)})
                 else:
-                    return JSON_Response('User credentials invalid')
+                    return JsonResponse({'message':'User credentials invalid'})
             else:
-                return HttpResponse('Required fields are empty: check username and password')
+                return JsonResponse({'message': 'Required fields are empty: check username and password'})
         else:
-            return HttpResponse('Empty POST Request Sent')
+            return JsonResponse({'message': 'Empty POST Request Sent'})
     else:
-        return HttpResponse('Only POST Requests Allowed')
+        return JsonResponse({'message': 'Only POST Requests Allowed'})
                     
                     

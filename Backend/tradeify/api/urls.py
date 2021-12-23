@@ -1,9 +1,10 @@
 from django.urls import path
 from django.urls.resolvers import URLPattern
 
-from . import views
+from . import views, tradenotes_functions
 
 urlpatterns = [
         path('create_user', views.Create_User, name='create_user'),
-        path('login_user', views.Login_User, name='login_user')
+        path('login_user', views.Login_User, name='login_user'),
+        path('create_tradenote', tradenotes_functions.create_Tradenote, name='create_tradenote')
 ]

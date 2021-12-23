@@ -81,8 +81,9 @@ class MediaForm(forms.ModelForm):
 
 class Tradenotes(models.Model):
     User = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    title = models.CharField(max_length=100)
     summary = models.CharField(max_length=1000)
-    rationale = models.CharField(max_length=1000)
+    rationale = models.CharField(max_length=1000, null=True)
     begin_time = models.DateTimeField()
     end_time = models.DateTimeField()
     last_modified_date = models.DateTimeField()
@@ -90,11 +91,14 @@ class Tradenotes(models.Model):
     emotions = models.CharField(max_length=10)
     #Profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     media = models.ArrayField(model_container=Media,
-                              model_form_class=MediaForm)
+                              model_form_class=MediaForm,
+                              null=True)
     kpis = models.ArrayField(model_container=Kpi,
-                             model_form_class=KpiForm)
+                             model_form_class=KpiForm,
+                             null=True)
     trades = models.ArrayField(model_container=Trade,
-                               model_form_class=TradeForm)
+                               model_form_class=TradeForm, 
+                               null=True)
     objects = models.DjongoManager()
 
 
@@ -105,5 +109,5 @@ class Tradenotes(models.Model):
 #             'summary', 'rationale', 'begin_time', 'end_price', 'last_modified', 'last_modefied_date', 'created_date', 'emotions', 'media', 'kpis', 'trades'
 #         )
 
-#     def __str__(self) -> str:
-#         return f"\nTradenotes: {self.summary}"
+    def __str__(self) -> str:
+        return f"\nTradenotes: {self.title} - {self.summary}"
