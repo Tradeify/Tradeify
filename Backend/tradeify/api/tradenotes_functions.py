@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http.response import JsonResponse
 from datetime import datetime
 
-from Backend.tradeify.api.models import Tradenotes
+from .models import Tradenotes
 
 date_Format = '%m/%d/%Y %I:%M%p'
 @login_required
@@ -35,14 +35,25 @@ def create_Tradenote(request):
         return JsonResponse({'message': str('ONLY POST REQUESTS ALLOWED')})
 
 
+#@login_required
+#def edit_Tradenote_Header(request):
+    #if request.method == 'POST':
+        #if request.POST != {}:
+            #if request.POST['id']:
+                #if request.POST['title'].strip() \
+                    #or request.POST['summary'].strip() \
+                    #or request.POST['rationale'].strip() \
+                    #or request.POST['begin_time'].strip() \
+                    #or request.POST['end_time'].strip() or request.POST['emotions'].strip():
+                    #Tradenotes.object.get(id=request.POST['id'], User__id=request.user.id)
+
 @login_required
-def edit_Tradenote_Header(request):
-    if request.method == 'POST':
-        if request.POST != {}:
-            if request.POST['id']:
-                if request.POST['title'].strip() \
-                    or request.POST['summary'].strip() \
-                    or request.POST['rationale'].strip() \
-                    or request.POST['begin_time'].strip() \
-                    or request.POST['end_time'].strip() or request.POST['emotions'].strip():
-                        if 
+def get_Tradenote(request, tradenote_id):
+    if request.method == 'GET':
+        if tradenote_id != 0:
+            Tradenotes.objects.get(tradenote_id, User__id=request.user.id)
+            return JsonResponse({'Tradenote': Tradenotes.objects.get(tradenote_id, User__id=request.user.id)})
+        else:
+            return JsonResponse({'message': str('Please provide a valid id')})
+    else:
+        return JsonResponse({'message': str('ONLY GET REQUESTS ALLOWED')})
