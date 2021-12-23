@@ -1,3 +1,5 @@
+import json
+from json.encoder import JSONEncoder
 from django.contrib.auth.decorators import login_required
 from django.http.response import JsonResponse
 from datetime import datetime
@@ -51,9 +53,20 @@ def create_Tradenote(request):
 def get_Tradenote(request, tradenote_id):
     if request.method == 'GET':
         if tradenote_id != 0:
-            Tradenotes.objects.get(tradenote_id, User__id=request.user.id)
-            return JsonResponse({'Tradenote': Tradenotes.objects.get(tradenote_id, User__id=request.user.id)})
+            Tradenotes.objects.get(id=tradenote_id, User__id=request.user.id)
+            return JsonResponse({'Tradenote': \
+            TradenoteEncoder().encode(Tradenotes.objects.get(id=tradenote_id, User__id=request.user.id))})
         else:
             return JsonResponse({'message': str('Please provide a valid id')})
     else:
         return JsonResponse({'message': str('ONLY GET REQUESTS ALLOWED')})
+
+
+
+
+class TradenoteEncoder(JSONEncoder):
+    def default(self, o):
+        if isinstance(o, datetime):
+            return dict(year=o.year, month=o.month, day=o.day)
+        else:
+            return o.__dict__

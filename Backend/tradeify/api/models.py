@@ -1,6 +1,8 @@
+from django.http.response import JsonResponse
 from djongo import models
 from django import forms
 from django.contrib.auth.models import User
+from json import JSONEncoder
 
 #class Profile(models.Model):
     #username = models.CharField(max_length=100)
@@ -18,7 +20,7 @@ from django.contrib.auth.models import User
 #         )
 
 
-class Kpi(models.Model):
+class Kpi(models.Model, JSONEncoder):
     ticker = models.CharField(max_length=10)
     value = models.FloatField()
 
@@ -28,6 +30,8 @@ class Kpi(models.Model):
     def __str__(self) -> str:
         return f"\nTicker: {self.ticker} \nValue: {self.value}"
 
+    def default(self, o):
+        return o.__dict__
 
 class KpiForm(forms.ModelForm):
     class Meta:
@@ -37,7 +41,7 @@ class KpiForm(forms.ModelForm):
         )
 
 
-class Trade(models.Model):
+class Trade(models.Model, JSONEncoder):
     ticker = models.CharField(max_length=10)
     entry_time = models.DateTimeField()
     exit_time = models.DateTimeField()
@@ -50,6 +54,9 @@ class Trade(models.Model):
     def __str__(self) -> str:
         return f"\nTicker: {self.ticker}"
 
+    def default(self, o):
+        return o.__dict__
+
 
 class TradeForm(forms.ModelForm):
     class Meta:
@@ -59,7 +66,7 @@ class TradeForm(forms.ModelForm):
         )
 
 
-class Media(models.Model):
+class Media(models.Model, JSONEncoder):
     media_type = models.CharField(max_length=100)
     media_name = models.CharField(max_length=100)
     media_data = models.CharField(max_length=10000)
@@ -70,6 +77,9 @@ class Media(models.Model):
     def __str__(self) -> str:
         return f"\nMedia: {self.media_name}"
 
+    def default(self, o):
+        return o.__dict__
+
 
 class MediaForm(forms.ModelForm):
     class Meta:
@@ -79,7 +89,7 @@ class MediaForm(forms.ModelForm):
         )
 
 
-class Tradenotes(models.Model):
+class Tradenotes(models.Model, JSONEncoder):
     User = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=100)
     summary = models.CharField(max_length=1000)
@@ -111,3 +121,6 @@ class Tradenotes(models.Model):
 
     def __str__(self) -> str:
         return f"\nTradenotes: {self.title} - {self.summary}"
+    
+    def default(self, o):
+        return o.__dict__
