@@ -26,7 +26,7 @@ class Kpi(models.Model, JSONEncoder):
     value = models.FloatField()
 
     class Meta:
-        abstract = True
+        managed = False
 
     def __str__(self) -> str:
         return f"\nTicker: {self.ticker} \nValue: {self.value}"
@@ -36,6 +36,9 @@ class Kpi(models.Model, JSONEncoder):
             return dict(year=o.year, month=o.month, day=o.day)
         else:
             return o.__dict__
+    
+    def __getitem__(self, name):
+        return getattr(self, name)
 
 class KpiForm(forms.ModelForm):
     class Meta:
@@ -53,7 +56,7 @@ class Trade(models.Model, JSONEncoder):
     exit_price = models.FloatField()
 
     class Meta:
-        abstract = True
+            managed = False
 
     def __str__(self) -> str:
         return f"\nTicker: {self.ticker}"
@@ -63,6 +66,9 @@ class Trade(models.Model, JSONEncoder):
             return dict(year=o.year, month=o.month, day=o.day)
         else:
             return o.__dict__
+    
+    def __getitem__(self, name):
+        return getattr(self, name)
 
 
 class TradeForm(forms.ModelForm):
@@ -79,7 +85,7 @@ class Media(models.Model, JSONEncoder):
     media_data = models.CharField(max_length=10000)
 
     class Meta:
-        abstract = True
+        managed = False
 
     def __str__(self) -> str:
         return f"\nMedia: {self.media_name}"
@@ -89,6 +95,9 @@ class Media(models.Model, JSONEncoder):
             return dict(year=o.year, month=o.month, day=o.day)
         else:
             return o.__dict__
+    
+    def __getitem__(self, name):
+        return getattr(self, name)
 
 
 class MediaForm(forms.ModelForm):
@@ -100,6 +109,7 @@ class MediaForm(forms.ModelForm):
 
 
 class Tradenotes(models.Model, JSONEncoder):
+    id = models.BigAutoField(primary_key=True)
     User = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=100)
     summary = models.CharField(max_length=1000)
@@ -137,3 +147,6 @@ class Tradenotes(models.Model, JSONEncoder):
             return dict(year=o.year, month=o.month, day=o.day)
         else:
             return o.__dict__
+
+    def __getitem__(self, name):
+        return getattr(self, name)

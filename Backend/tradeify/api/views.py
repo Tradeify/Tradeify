@@ -7,18 +7,18 @@ from django.contrib.auth import login, authenticate
 def Create_User(request):
     if request.method == 'POST':
         if request.POST != {}:
-            if request.POST['username'].strip() \
-                and request.POST['password'].strip() \
-                and request.POST['email'] \
-                and request.POST['first_name'] \
-                and request.POST['last_name']:
-                if User.objects.filter(username=request.POST['username'].strip().lower()).count() == 0:
+            if request.POST.get('username','').strip() \
+                and request.POST.get('password','').strip() \
+                and request.POST.get('email','') \
+                and request.POST.get('first_name','') \
+                and request.POST.get('last_name',''):
+                if User.objects.filter(username=request.POST.get('username','').strip().lower()).count() == 0:
                     a = User.objects.create_user(
-                    username = request.POST['username'].strip().lower(),
-                    password = request.POST['password'].strip(),
-                    email = request.POST['email'].strip(),
-                    first_name = request.POST['first_name'].strip(),
-                    last_name = request.POST['last_name'].strip()
+                    username = request.POST.get('username','').strip().lower(),
+                    password = request.POST.get('password','').strip(),
+                    email = request.POST.get('email','').strip(),
+                    first_name = request.POST.get('first_name','').strip(),
+                    last_name = request.POST.get('last_name','').strip()
                     )
                     a.save() 
                     login(request, a)
@@ -37,9 +37,9 @@ def Create_User(request):
 def Login_User(request):
     if request.method == 'POST':
         if request.POST != {}:
-            if request.POST['username'].strip() and request.POST['password'].strip():
-                user = authenticate(request, username=request.POST['username'].strip(), \
-                    password=request.POST['password'].strip())
+            if request.POST.get('username','').strip() and request.POST.get('password','').strip():
+                user = authenticate(request, username=request.POST.get('username','').strip(), \
+                    password=request.POST.get('password','').strip())
                 if user is not None: 
                     login(request, user)
                     return JsonResponse({'username': str(user)})
