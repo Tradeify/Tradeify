@@ -26,7 +26,7 @@ class Kpi(models.Model, JSONEncoder):
     value = models.FloatField()
 
     class Meta:
-        managed = False
+        abstract = True
 
     def __str__(self) -> str:
         return f"\nTicker: {self.ticker} \nValue: {self.value}"
@@ -56,7 +56,7 @@ class Trade(models.Model, JSONEncoder):
     exit_price = models.FloatField()
 
     class Meta:
-            managed = False
+            abstract = True
 
     def __str__(self) -> str:
         return f"\nTicker: {self.ticker}"
@@ -85,7 +85,7 @@ class Media(models.Model, JSONEncoder):
     media_data = models.CharField(max_length=10000)
 
     class Meta:
-        managed = False
+        abstract = True
 
     def __str__(self) -> str:
         return f"\nMedia: {self.media_name}"

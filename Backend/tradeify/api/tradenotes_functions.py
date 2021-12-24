@@ -1,6 +1,7 @@
 import json
 from json.encoder import JSONEncoder
 from django.contrib.auth.decorators import login_required
+from django.db.models.indexes import Index
 from django.http.response import HttpResponse, JsonResponse
 from datetime import datetime
 
@@ -47,15 +48,18 @@ def edit_Tradenote_Header(request):
                     or request.POST.get('rationale','').strip() \
                     or request.POST.get('begin_time','').strip() \
                     or request.POST.get('end_time','').strip() or request.POST.get('emotions','').strip():
-                    tradenotes = Tradenotes.objects.get(id=request.POST.get('id',''), User__id=request.user.id)
-                    tradenotes.title = request.POST.get('title','')
-                    tradenotes.summary = request.POST.get('summary','') 
-                    tradenotes.rationale = request.POST.get('rationale','')
-                    tradenotes.begin_time = datetime.strptime(request.POST.get('begin_time',''), date_Format)
-                    tradenotes.end_time = datetime.strptime(request.POST.get('end_time',''), date_Format)
-                    tradenotes.last_modified_date = datetime.now()
-                    tradenotes.save()
-                    return JsonResponse(json.loads(TradenoteEncoder().encode(tradenotes)))
+                    try:
+                        tradenotes = Tradenotes.objects.get(id=request.POST.get('id',''), User__id=request.user.id)
+                        tradenotes.title = request.POST.get('title','')
+                        tradenotes.summary = request.POST.get('summary','') 
+                        tradenotes.rationale = request.POST.get('rationale','')
+                        tradenotes.begin_time = datetime.strptime(request.POST.get('begin_time',''), date_Format)
+                        tradenotes.end_time = datetime.strptime(request.POST.get('end_time',''), date_Format)
+                        tradenotes.last_modified_date = datetime.now()
+                        tradenotes.save()
+                        return JsonResponse(json.loads(TradenoteEncoder().encode(tradenotes)))
+                    except Tradenotes.DoesNotExist:
+                        return JsonResponse({'message': str('Unauthorized access to Tradenote')})
                 else: 
                     return JsonResponse({'message': str('No changes have been made.')})
             else: 
@@ -64,6 +68,27 @@ def edit_Tradenote_Header(request):
             return JsonResponse({'message': str('Empty POST requests not allowed')})
     else: 
         return JsonResponse({'message': str('Only POST requests allowed')})
+
+@login_required
+def delete_Tradenote(request, tradenote_id):
+    if request.method == 'DELETE':
+            if tradenote_id !=0:
+                try:
+                    tradenotes = Tradenotes.objects.get(id=tradenote_id, User__id=request.user.id)
+                    tradenotes.delete()
+                    if Tradenotes.objects.filter(id=tradenote_id, User__id=request.user.id).count() == 0:
+                        return JsonResponse({'message': str('Tradenote has been deleted')})
+                    else:
+                        return JsonResponse({'message': str('Tradenote was not deleted')})
+                except Tradenotes.DoesNotExist:
+                        return JsonResponse({'message': str('Tradenote does not exist')})
+            else: 
+                return JsonResponse({'message': str('Invalid access')})
+    else: 
+        return JsonResponse({'message': str('Only DELETE requests allowed')}) 
+    
+
+
 
 
 @login_required
@@ -96,18 +121,106 @@ def add_Kpi(request):
     if request.method == 'POST':
         if request.POST != {}:
             if request.POST.get('id',''):
-                tradenote = Tradenotes.objects.get(id=request.POST.get('id',''), User_id=request.user.id)
-                if tradenote.kpis == None:
-                    tradenote.kpis = []
-                tradenote.kpis.append({
-                    'ticker': request.POST.get('ticker', ''),
-                    'value':  request.POST.get('value', 0.00)
-                }) 
-                tradenote.save()
-                return JsonResponse(json.loads(TradenoteEncoder().encode(Tradenotes.objects.get(id=request.POST.get('id',''), User_id=request.user.id))))
+                try:
+                    tradenote = Tradenotes.objects.get(id=request.POST.get('id',''), User_id=request.user.id)
+                    if tradenote.kpis == None:
+                        tradenote.kpis = []
+                    tradenote.kpis.append({
+                        'ticker': request.POST.get('ticker', ''),
+                        'value':  request.POST.get('value', 0.00)
+                    }) 
+                    tradenote.save()
+                    return JsonResponse(json.loads(TradenoteEncoder().encode(Tradenotes.objects.get(id=request.POST.get('id',''), User_id=request.user.id))))
+                except Tradenotes.DoesNotExist:
+                    return JsonResponse({'message': str('Unauthorized access to Tradenote')})
             else:
                 return JsonResponse({'message': str('Please provide a valid id')})
         else: 
             return JsonResponse({'message': str('Empty POST requests not allowed')})
     else:
-        return JsonResponse({'message': str('ONLY GET REQUESTS ALLOWED')})
+        return JsonResponse({'message': str('ONLY POST REQUESTS ALLOWED')})
+
+@login_required
+def edit_Kpi(request):
+    if request.method == 'POST':
+        if request.POST != {}:
+            if request.POST.get('id',''):
+                    if request.POST.get('ticker','').strip() \
+                        or request.POST.get('value','').strip():
+                            try:
+                                tradenote = Tradenotes.objects.get(id=request.POST.get('id',''), User_id=request.user.id)
+                                tradenote.kpis[int(request.POST.get('index', 0))] = {
+                                    'ticker': request.POST.get('ticker', ''),
+                                    'value':  request.POST.get('value', 0.00)
+                                }
+                                tradenote.save()
+                                return JsonResponse(json.loads(TradenoteEncoder().encode(Tradenotes.objects.get(id=request.POST.get('id',''), User_id=request.user.id))))
+                            except Tradenotes.DoesNotExist:
+                                return JsonResponse({'message': str('Unauthorized access to Tradenote')})
+                    else:
+                        return JsonResponse({'message': str('Please provide a ticker')})
+            else:
+                return JsonResponse({'message': str('Please provide a valid id')})
+        else: 
+            return JsonResponse({'message': str('Empty POST requests not allowed')})
+    else:
+        return JsonResponse({'message': str('ONLY POST REQUESTS ALLOWED')})
+
+@login_required
+def add_Trade(request):
+    if request.method == 'POST':
+        if request.POST != {}:
+            if request.POST.get('id',''):
+                try:
+                    tradenote = Tradenotes.objects.get(id=request.POST.get('id',''), User_id=request.user.id)
+                    if tradenote.trades == None:
+                        tradenote.trades = []
+                    tradenote.trades.append({
+                        'ticker': request.POST.get('ticker', ''),
+                        'entry_time': datetime.strptime(request.POST.get('entry_time', ''), date_Format),
+                        'exit_time': datetime.strptime(request.POST.get('exit_time', ''), date_Format),
+                        'entry_price': request.POST.get('entry_price', ''),
+                        'exit_price': request.POST.get('exit_price', '')
+                    }) 
+                    tradenote.save()
+                    return JsonResponse(json.loads(TradenoteEncoder().encode(Tradenotes.objects.get(id=request.POST.get('id',''), User_id=request.user.id))))
+                except Tradenotes.DoesNotExist:
+                    return JsonResponse({'message': str('Unauthorized access to Tradenote')})
+            else:
+                return JsonResponse({'message': str('Please provide a valid id')})
+        else: 
+            return JsonResponse({'message': str('Empty POST requests not allowed')})
+    else:
+        return JsonResponse({'message': str('ONLY POST REQUESTS ALLOWED')})
+
+@login_required
+def edit_Trade(request):
+    if request.method == 'POST':
+        if request.POST != {}:
+            if request.POST.get('id',''):
+                    if request.POST.get('ticker','').strip() \
+                        or request.POST.get('entry_time','').strip()\
+                        or request.POST.get('exit_time','').strip()\
+                        or request.POST.get('entry_price','').strip()\
+                        or request.POST.get('exit_price','').strip():
+                            try:
+                                tradenote = Tradenotes.objects.get(id=request.POST.get('id',''), User_id=request.user.id)
+                                tradenote.trades[int(request.POST.get('index', 0))] = {
+                                    'ticker': request.POST.get('ticker', ''),
+                                    'entry_time':  datetime.strptime(request.POST.get('entry_time', 0.00), date_Format),
+                                    'exit_time':  datetime.strptime(request.POST.get('exit_time', 0.00), date_Format),
+                                    'entry_price':  request.POST.get('entry_price', 0.00),
+                                    'exit_price':  request.POST.get('exit_price', 0.00)
+                                }
+                                tradenote.save()
+                                return JsonResponse(json.loads(TradenoteEncoder().encode(Tradenotes.objects.get(id=request.POST.get('id',''), User_id=request.user.id))))
+                            except Tradenotes.DoesNotExist:
+                                return JsonResponse({'message': str('Unauthorized access to Tradenote')})
+                    else:
+                        return JsonResponse({'message': str('Please provide a ticker')})
+            else:
+                return JsonResponse({'message': str('Please provide a valid id')})
+        else: 
+            return JsonResponse({'message': str('Empty POST requests not allowed')})
+    else:
+        return JsonResponse({'message': str('ONLY POST REQUESTS ALLOWED')})
