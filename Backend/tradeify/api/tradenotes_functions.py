@@ -110,10 +110,8 @@ def get_Tradenote(request, tradenote_id):
 
 class TradenoteEncoder(JSONEncoder):
     def default(self, o):
-        if isinstance(o, datetime):
-            return o.ctime()
-        else:
-            return o.__dict__
+        return o.ctime() if isinstance (o, datetime) else o.__dict__
+            
 
 
 @login_required
