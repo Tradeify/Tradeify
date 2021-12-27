@@ -8,6 +8,7 @@ urlpatterns = [
         path('login_user', views.Login_User, name='login_user'),
         path('create_tradenote', tradenotes_functions.create_Tradenote, name='create_tradenote'),
         path('get_tradenote/<int:tradenote_id>', tradenotes_functions.get_Tradenote, name='get_tradenote'),
+        path("get_all_tradenotes", tradenotes_functions.get_All_Tradenotes, name="get_all_tradenotes"),
         path('edit_tradenote_header', tradenotes_functions.edit_Tradenote_Header, name='edit_tradenote_header'),
         path('add_kpi', tradenotes_functions.add_Kpi, name='add_kpi'),
         path('edit_kpi',tradenotes_functions.edit_Kpi, name='edit_kpi'),

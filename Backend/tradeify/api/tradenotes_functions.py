@@ -9,7 +9,11 @@ from .models import Tradenotes
 
 date_Format = '%m/%d/%Y %I:%M%p'
 
+"""Create a new tradenote for the logged in user
 
+Returns:
+    JsonResponse: Containing the title and summary of the newly created tradenote
+"""
 @login_required
 def create_Tradenote(request):
     if request.method == 'POST':
@@ -42,6 +46,11 @@ def create_Tradenote(request):
         return JsonResponse({'message': str('ONLY POST REQUESTS ALLOWED')})
 
 
+"""Edit an existing tradenote -- Tradenote must be owned by logged in user
+
+Returns:
+    JsonResponse: Returns edited tradenote that has been saved to the DB
+"""
 @login_required
 def edit_Tradenote_Header(request):
     if request.method == 'POST':
@@ -78,6 +87,11 @@ def edit_Tradenote_Header(request):
         return JsonResponse({'message': str('Only POST requests allowed')})
 
 
+"""Delete an existing tradenote
+
+Returns:
+    JsonResponse: Confirmation that tradenote has been deleted
+"""
 @login_required
 def delete_Tradenote(request, tradenote_id):
     if request.method == 'DELETE':
@@ -98,6 +112,11 @@ def delete_Tradenote(request, tradenote_id):
         return JsonResponse({'message': str('Only DELETE requests allowed')})
 
 
+"""Get the tradenote with the provided tradenote id -- only returns if the logged in user owns the tradenote
+
+Returns:
+    JsonResponse: Tradenote
+"""
 @login_required
 def get_Tradenote(request, tradenote_id):
     if request.method == 'GET':
@@ -113,12 +132,16 @@ def get_Tradenote(request, tradenote_id):
         return JsonResponse({'message': str('ONLY GET REQUESTS ALLOWED')})
 
 
+"""Get all tradenotes that are related/created by the logged-in user
+
+Returns:
+    JsonResponse: Tradenotes object containing a list of all tradenotes created by a user
+"""
 @login_required
 def get_All_Tradenotes(request):
     if request.method == 'GET':
         try:
-            return JsonResponse({'Tradenotes':
-                                 json.loads(TradenoteEncoder.encode(Tradenotes.objects.filter(User__id=request.user.id)))})
+            return JsonResponse({ 'Tradenotes': json.loads(TradenoteEncoder().encode(list(Tradenotes.objects.filter(User__id=request.user.id))))})
         except Tradenotes.DoesNotExist:
             return JsonResponse({'message': 'No tradenotes found for this user'})
     else:
@@ -130,6 +153,11 @@ class TradenoteEncoder(JSONEncoder):
         return o.ctime() if isinstance(o, datetime) else o.__dict__
 
 
+"""Add a new KPI to the selected tradenote
+
+Returns:
+    JsonResponse: Return the newly edited tradenote
+"""
 @login_required
 def add_Kpi(request):
     if request.method == 'POST':
@@ -156,6 +184,11 @@ def add_Kpi(request):
         return JsonResponse({'message': str('ONLY POST REQUESTS ALLOWED')})
 
 
+"""Edit an existing KPI -- owning user must be logged in
+
+Returns:
+    JsonResponse: Return tbe whole edited tradenote object
+"""
 @login_required
 def edit_Kpi(request):
     if request.method == 'POST':
@@ -184,6 +217,11 @@ def edit_Kpi(request):
         return JsonResponse({'message': str('ONLY POST REQUESTS ALLOWED')})
 
 
+"""Add new trade to the selected tradenote
+
+Returns:
+    JsonResponse: Complete edited tradenote
+"""
 @login_required
 def add_Trade(request):
     if request.method == 'POST':
@@ -213,6 +251,11 @@ def add_Trade(request):
         return JsonResponse({'message': str('ONLY POST REQUESTS ALLOWED')})
 
 
+"""Edit tradenote seleced by ID -- User must be logged in
+
+Returns:
+    JsonResponse: Return the whole tradenote object
+"""
 @login_required
 def edit_Trade(request):
     if request.method == 'POST':
