@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="App flex flex-row">
       <Sidebar></Sidebar>
-      <div>
+      <div className='w-full'>
         <NavBar />
       </div>
     </div>
