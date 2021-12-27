@@ -9,7 +9,7 @@ function App() {
     <div className="App flex flex-row">
       <Sidebar></Sidebar>
       <div className='w-full'>
-        <NavBar />
+        <NavBar title={'All Tradenotes'}/>
       </div>
     </div>
   );
