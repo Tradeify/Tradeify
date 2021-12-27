@@ -3,12 +3,20 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 import SidePanelTab from './sidepaneltab'
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
+import SidePanelItem from "./sidepanelitem";
+import HelpCenterIcon from '@mui/icons-material/HelpCenter';
 class Sidebar extends React.Component {
     render() {
         return (
             <div className='sidebar flex flex-col outline-slate-400 border-r-2'>
                 <ProfileSection name={'Omotunde Yusuff'} initials={'OY'}></ProfileSection>
                 <SidePanelTab></SidePanelTab>
+                <div className='fixed bottom-5 left-4'>
+                    <SidePanelItem spitemtitle={'Help'} spitemsubtitle={'Lessons, Ideas, FAQs'}
+                        className={'bg-[#03DCCF] text-white'}>
+                        <HelpCenterIcon />
+                    </SidePanelItem>
+                </div>
             </div>
         )
     }
