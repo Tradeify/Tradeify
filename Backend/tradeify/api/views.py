@@ -52,4 +52,9 @@ def Login_User(request):
     else:
         return JsonResponse({'message': 'Only POST Requests Allowed'})
                     
-                    
+def Send_Unauthorized(request):
+    res = JsonResponse({
+        'message': 'User needs to be logged in'
+    })
+    res.status_code = 401;
+    return res        
