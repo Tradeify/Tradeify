@@ -83,7 +83,7 @@ DATABASES = {
         'NAME': 'tradeify',
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
-            'host': 'mongodb+srv://otheradmin:qwerty123@tradeify.nr06g.mongodb.net/test?authSource=admin&replicaSet=atlas-1rj3dt-shard-0&readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=true'
+            'host': 'mongodb+srv://otheradmin:qwerty123@tradeify.nr06g.mongodb.net/test?authSource=admin&replicaSet=atlas-1rj3dt-shard-0&readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=true&ssl_cert_reqs=CERT_NONE'
         }
     }
 }
