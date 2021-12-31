@@ -1,6 +1,8 @@
 import React from 'react';
+import { Route, Routes, Link } from 'react-router-dom'
 import Modal from 'react-modal';
 import Login from './components/login';
+import CreateUser from './components/createuser';
 import Sidebar from './components/sidebar';
 import NavBar from './components/navbar';
 import MainSection from './components/mainsection'
@@ -28,7 +30,9 @@ function App() {
       <div className='w-full'>
         <NavBar title={'All Tradenotes'} />
         <MainSection />
-        <button onClick={openModal}>Open Modal</button>
+        <Link to="/login">
+          <button onClick={openModal}>Open Modal</button>
+        </Link>
       </div>
       <Modal
         className='w-96 h-fit-content bg-white rounded-md flex flex-col justify-center'
@@ -38,7 +42,10 @@ function App() {
         onRequestClose={closeModal}
         contentLabel="Login"
       >
-        <Login onLoginSuccess={null} onLoginFail={null} />
+        <Routes>
+          <Route path="/login" element={<Login onLoginSuccess={null} onLoginFail={null} />} />
+          <Route path='/createuser' element={<CreateUser />} />
+        </Routes>
       </Modal>
     </div>
   );
