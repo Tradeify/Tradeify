@@ -7,7 +7,10 @@ class Sidebar extends React.Component {
     render() {
         return (
             <div className='sidebar flex flex-col outline-slate-400 border-r-2'>
-                <ProfileSection name={'Omotunde Yusuff'} initials={'OY'}></ProfileSection>
+                <ProfileSection
+                    name={(this.props.user) ? this.props.user.firstname + ' ' + this.props.user.lastname : 'Omotunde Yusuff'}
+                    initials={(this.props.user) ? this.props.user.firstname[0] + this.props.user.lastname[0] : 'OY'}
+                ></ProfileSection>
                 <SidePanelTab></SidePanelTab>
                 <div className='fixed bottom-5 left-4'>
                     <SidePanelItem spitemtitle={'Help'} spitemsubtitle={'Lessons, Ideas, FAQs'}
