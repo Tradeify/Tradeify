@@ -22,7 +22,13 @@ def Create_User(request):
                     )
                     a.save() 
                     login(request, a)
-                    res = JsonResponse({'user': str(User.objects.get(username=request.POST['username']))})
+                    res = JsonResponse({
+                        'user': str(User.objects.get(username=request.POST['username'])),
+                        'firstname': a.first_name,
+                        'lastname': a.last_name,
+                        'email': a.email,
+                        })
+                    res.status_code = 201
                     return res
                 else:
                     return JsonResponse({ 'message': str('User already exists')})
@@ -42,7 +48,12 @@ def Login_User(request):
                     password=request.POST.get('password','').strip())
                 if user is not None: 
                     login(request, user)
-                    return JsonResponse({'username': str(user)})
+                    return JsonResponse({
+                        'username': str(user),
+                        'firstname': user.first_name,
+                        'lastname': user.last_name,
+                        'email': user.email,
+                        })
                 else:
                     return JsonResponse({'message':'User credentials invalid'})
             else:

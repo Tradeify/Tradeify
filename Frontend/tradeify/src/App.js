@@ -12,6 +12,7 @@ Modal.setAppElement('#root');
 
 function App() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [user, setUser] = React.useState(null);
 
   function openModal() {
     setIsOpen(true);
@@ -24,9 +25,14 @@ function App() {
     setIsOpen(false);
   }
 
+  function loginUser(user) {
+    setUser(user);
+    closeModal();
+  }
+
   return (
     <div className="App flex flex-row">
-      <Sidebar></Sidebar>
+      <Sidebar user={user}></Sidebar>
       <div className='w-full'>
         <NavBar title={'All Tradenotes'} />
         <MainSection />
@@ -43,7 +49,7 @@ function App() {
         contentLabel="Login"
       >
         <Routes>
-          <Route path="/login" element={<Login onLoginSuccess={null} onLoginFail={null} />} />
+          <Route path="/login" element={<Login onLoginSuccess={loginUser} />} />
           <Route path='/createuser' element={<CreateUser />} />
         </Routes>
       </Modal>
