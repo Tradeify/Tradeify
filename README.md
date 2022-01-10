@@ -1,5 +1,4 @@
-# Tradeify
-![tradeify_logo](https://user-images.githubusercontent.com/10810722/148707769-1ca6242d-f156-4b36-892e-35fa7b92713b.png)
+# Tradeify ![tradeify_logo](https://user-images.githubusercontent.com/10810722/148707769-1ca6242d-f156-4b36-892e-35fa7b92713b.png)
 
 Tradeify is a project currently under construction to provide investors with a flexible interface to record tradenotes and the related KPIs and Trades. It provides value to investors through the provision of formal trade history and recording to track gains and losses, and to track rationale and trading strategies.
 
