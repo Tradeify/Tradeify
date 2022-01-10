@@ -28,7 +28,7 @@ class ProfileSection extends React.Component {
         return (
             <div className='flex flex-col justify-between'>
                 <div className='flex flex-row justify-between items-center'>
-                    <a href='/'><img src="logo.png" alt="logo" /></a>
+                    <a href='/'><img src="tradeify_icon.svg" alt="logo" /></a>
                     <div className='flex flex-row'>
                         <div className="initialsLogo text-xs items-center flex flex-row">{this.props.initials}</div>
                         <div className='flex flex-row p-2 text-xs h-fit'>{this.props.name}</div>
