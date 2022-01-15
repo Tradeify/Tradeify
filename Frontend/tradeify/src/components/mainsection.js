@@ -2,7 +2,7 @@ import React from "react";
 class MainSection extends React.Component {
    render() {
       return (
-         <div className="p-4 flex flex-row flex-wrap items-start justify-start">
+         <div className="p-4 flex flex-row space-x-4  space-y-4 flex-wrap items-start justify-start">
             <TradeNote />
             <TradeNote summary={`
 What is Lorem Ipsum?
@@ -25,52 +25,6 @@ Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots 
             <TradeNote />
             <TradeNote />
             <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-            <TradeNote />
-
          </div>
       );
    }
@@ -79,17 +33,19 @@ Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots 
 class TradeNote extends React.Component {
    render() {
       return (
-         <div className="flex flex-col justify-between p-4 border-2 rounded w-56 border-gray-100 min-h-[200px] h-fit text-sm text-gray-500 hover:bg-[#03dccf]/30 hover:border-[#03dccf]">
-            <div>
-               <div className="title text-lg font-semibold text-black mb-2">{this.props.title ? this.props.title : "Default Title"}</div>
-               <div className="w-full border-t-2 border-inherit hover:border-inherit mb-2" />
-               <div className="summary">{this.props.summary ? this.props.summary : "Summary"}</div>
+         <button>
+            <div className="flex flex-col justify-between p-4 border-2 rounded w-56 border-gray-100 min-h-[200px] h-fit text-left hover:shadow-lg duration-[350ms] ease-in text-sm text-gray-500 hover:bg-[#03dccf]/10 hover:border-[#03dccf]">
+               <div>
+                  <div className="title text-lg font-semibold text-black mb-2">{this.props.title ? this.props.title : "Default Title"}</div>
+                  <div className="w-full border-t-2 border-inherit hover:border-inherit mb-2" />
+                  <div className="summary">{this.props.summary ? this.props.summary : "Summary"}</div>
+               </div>
+               <div>
+                  <div className="emotions mb-3">{this.props.emotions ? this.props.emotions : ":) :("}</div>
+                  <div className="lastUpdated">Last Updated: {this.props.lastUpdatedDate ? this.props.lastUpdatedDate : "3 days ago"}</div>
+               </div>
             </div>
-            <div>
-               <div className="emotions mb-3">{this.props.emotions ? this.props.emotions : ":) :("}</div>
-               <div className="lastUpdated">Last Updated: {this.props.lastUpdatedDate ? this.props.lastUpdatedDate : "3 days ago"}</div>
-            </div>
-         </div>
+         </button>
       );
    }
 }
