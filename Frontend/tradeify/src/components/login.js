@@ -1,10 +1,9 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 function Login(props) {
    const [loginError, setLoginError] = React.useState(false);
-   var navigate = useNavigate()
 
    function logUserIn(e) {
       e.preventDefault()
@@ -13,7 +12,8 @@ function Login(props) {
       var requestOptions = {
          method: 'POST',
          body: formdata,
-         redirect: 'follow'
+         redirect: 'follow',
+         credentials: 'include'
       };
 
       fetch(process.env.REACT_APP_DJANGO_API + "login_user", requestOptions)
@@ -48,7 +48,7 @@ function Login(props) {
                Password:
                <input type='password' id="password" className="rounded-md border-2 border-black p-1" name="password" />
             </label>
-            {loginError ? <label className="w-full text-red-500">Error logging in. Please check your credentials</label> : null}
+            {loginError ? <label className="w-fit-content text-red-500">Error logging in. Please check your credentials</label> : null}
             <div className="flex flex-row justify-evenly py-3">
                <button className="rounded-md border-2 border-black w-24" onClick={logUserIn}>Log In</button>
                <Link to='/createuser'>
