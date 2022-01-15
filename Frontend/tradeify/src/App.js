@@ -35,10 +35,10 @@ function App() {
       <Sidebar user={user}></Sidebar>
       <div className='w-full'>
         <NavBar title={'All Tradenotes'} />
-        <MainSection />
         <Link to="/login">
           <button onClick={openModal}>Open Modal</button>
         </Link>
+        <MainSection />
       </div>
       <Modal
         className='w-96 h-fit-content bg-white rounded-md flex flex-col justify-center'

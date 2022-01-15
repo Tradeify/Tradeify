@@ -14,7 +14,7 @@ class NavBar extends React.Component {
                   <button className="p-2 text-slate-500"><ChevronLeft /></button>
                   <button className="p-2 text-slate-500"><ChevronRight /></button>
                </div>
-               <div className="p-2 text-base font-semibold h-fit">{this.props.title}</div>
+               <div className="p-2 text-lg font-semibold h-fit">{this.props.title}</div>
             </div>
             <div className="flex flex-row">
                <button className="p-2 text-slate-500"><Add /></button>
