@@ -33,10 +33,11 @@ Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots 
 class TradeNote extends React.Component {
    render() {
       return (
-         <button className="border-2 rounded border-gray-100 hover:shadow-lg duration-[350ms] ease-in text-sm text-gray-500 hover:bg-[#03dccf]/10 hover:border-[#03dccf]" style={this.props.length ? {
-            gridRow: "span " + this.props.length + " / auto"
-         } : {}}>
-            <div className="flex flex-col justify-between p-4 w-56 min-h-[200px] h-full text-left ">
+         <button className="w-56 border-2 rounded border-gray-100 hover:shadow-lg duration-[350ms] ease-in text-sm text-gray-500 hover:bg-[#03dccf]/10 hover:border-[#03dccf]"
+            style={{
+               gridRow: "span " + (this.props.summary && this.props.summary.length > 140 ? 2 : 1) + " / auto"
+            }}>
+            <div className="flex flex-col justify-between p-4 w-full min-h-[200px] h-full text-left ">
                <div>
                   <div className="title text-lg font-semibold text-black mb-2">{this.props.title ? this.props.title : "Default Title"}</div>
                   <div className="w-full border-t-2 border-inherit hover:border-inherit mb-2" />

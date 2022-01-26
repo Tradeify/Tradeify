@@ -36,7 +36,7 @@ function App() {
       <div className='w-full'>
         <NavBar title={'All Tradenotes'} />
         <Link to="/login">
-          <button onClick={openModal}>Open Modal</button>
+          <button style={{ display: "none" }} onClick={openModal}>Open Modal</button>
         </Link>
         <MainSection />
       </div>
