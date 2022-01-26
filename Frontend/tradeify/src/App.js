@@ -33,7 +33,7 @@ function App() {
   return (
     <div className="App flex flex-row">
       <Sidebar user={user}></Sidebar>
-      <div className='w-full'>
+      <div className='flex flex-col items-center w-full'>
         <NavBar title={'All Tradenotes'} />
         <Link to="/login">
           <button style={{ display: "none" }} onClick={openModal}>Open Modal</button>

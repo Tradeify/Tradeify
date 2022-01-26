@@ -36,9 +36,6 @@
     .mainSection {
         grid-template-columns: repeat(5, 1fr);
         width: fit-content;
-
-        align-self: center;
-        justify-self: center;
     }
 }
 
@@ -48,5 +45,9 @@
         height: 100%;
 
         overflow: hidden;
+    }
+    .mainSection {
+        grid-template-columns: repeat(4, 1fr);
+        width: fit-content;
     }
 }
