@@ -2,9 +2,9 @@ import React from "react";
 class MainSection extends React.Component {
    render() {
       return (
-         <div className="p-4 flex flex-row space-x-4  space-y-4 flex-wrap items-start justify-start">
+         <div className="p-4 mainSection">
             <TradeNote />
-            <TradeNote summary={`
+            <TradeNote length={2} summary={`
 What is Lorem Ipsum?
 
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
@@ -33,12 +33,14 @@ Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots 
 class TradeNote extends React.Component {
    render() {
       return (
-         <button>
-            <div className="flex flex-col justify-between p-4 border-2 rounded w-56 border-gray-100 min-h-[200px] h-fit text-left hover:shadow-lg duration-[350ms] ease-in text-sm text-gray-500 hover:bg-[#03dccf]/10 hover:border-[#03dccf]">
+         <button className="border-2 rounded border-gray-100 hover:shadow-lg duration-[350ms] ease-in text-sm text-gray-500 hover:bg-[#03dccf]/10 hover:border-[#03dccf]" style={this.props.length ? {
+            gridRow: "span " + this.props.length + " / auto"
+         } : {}}>
+            <div className="flex flex-col justify-between p-4 w-56 min-h-[200px] h-full text-left ">
                <div>
                   <div className="title text-lg font-semibold text-black mb-2">{this.props.title ? this.props.title : "Default Title"}</div>
                   <div className="w-full border-t-2 border-inherit hover:border-inherit mb-2" />
-                  <div className="summary">{this.props.summary ? this.props.summary : "Summary"}</div>
+                  <div className="summary max-h-60 overflow-hidden">{this.props.summary ? this.props.summary : "Summary"}</div>
                </div>
                <div>
                   <div className="emotions mb-3">{this.props.emotions ? this.props.emotions : ":) :("}</div>

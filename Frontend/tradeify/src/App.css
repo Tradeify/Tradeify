@@ -1,25 +1,27 @@
-@media only screen and (min-width: 1008px){
-    .sidebar{
+@media only screen and (min-width: 1008px) {
+    .sidebar {
         width: 300px;
         height: 100%;
         padding-left: 16px;
         padding-right: 16px;
     }
+
+
 }
 
-@media only screen and (min-width: 641px) and (max-width: 1007px){
-    .sidebar{
+@media only screen and (min-width: 641px) and (max-width: 1007px) {
+    .sidebar {
         width: 300px;
         height: 100%;
     }
 }
 
-.App{
+.App {
     height: 100%;
     width: 100%;
 }
 
-.initialsLogo{
+.initialsLogo {
     border-radius: 100%;
     color: white;
     background-color: black;
@@ -29,4 +31,10 @@
 
 .loginForm {
     width: 320px;
+}
+
+.mainSection {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px 10px;
 }
