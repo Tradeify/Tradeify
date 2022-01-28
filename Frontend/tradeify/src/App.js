@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes, Link } from 'react-router-dom'
+import { Route, Routes, Link, useNavigate } from 'react-router-dom'
 import Modal from 'react-modal';
 import Login from './components/login';
 import CreateUser from './components/createuser';
@@ -13,9 +13,11 @@ Modal.setAppElement('#root');
 function App() {
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [user, setUser] = React.useState(null);
+  const [perfomRequest, setPerformRequest] = React.useState(true)
 
   function openModal() {
     setIsOpen(true);
+    setPerformRequest(false);
   }
 
   function afterOpenModal() {
@@ -23,6 +25,7 @@ function App() {
 
   function closeModal() {
     setIsOpen(false);
+    setPerformRequest(true);
   }
 
   function loginUser(user) {
@@ -38,7 +41,7 @@ function App() {
         <Link to="/login">
           <button style={{ display: "none" }} onClick={openModal}>Open Modal</button>
         </Link>
-        <MainSection />
+        <MainSection requireLogin={openModal} perfomRequest={perfomRequest}/>
       </div>
       <Modal
         className='w-96 h-fit-content bg-white rounded-md flex flex-col justify-center'
