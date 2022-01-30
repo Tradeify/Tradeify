@@ -23,6 +23,10 @@
     overflow-y: auto;
 }
 
+.backgroundwithOpacity {
+    background-color: rgba(148, 163, 184, 0.75);
+}
+
 @media only screen and (min-width: 1008px) {
     .sidebar {
         width: 300px;
@@ -46,6 +50,7 @@
 
         overflow: hidden;
     }
+
     .mainSection {
         grid-template-columns: repeat(4, 1fr);
         width: fit-content;

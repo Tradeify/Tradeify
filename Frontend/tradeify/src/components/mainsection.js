@@ -1,12 +1,9 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
 function MainSection(props) {
-   let navigate = useNavigate()
    const [alltradenotes, setAllTradenotes] = React.useState([])
 
    function GetAllTradenotes() {
-
       var requestOptions = {
          method: 'GET',
          redirect: 'follow',
@@ -16,11 +13,12 @@ function MainSection(props) {
       fetch(process.env.REACT_APP_DJANGO_API + "get_all_tradenotes", requestOptions)
          .then(response => {
             console.log(response)
-            if (response.status == 200) {
+            if (response.status === 200) {
                return response.json()
-            } else if (response.status == 401) {
-               navigate(process.env.REACT_APP_FRONTEND_DOMAIN + "login")
-               props.requireLogin()
+            } else if (response.status === 401) {
+               props.spc(false);
+               props.path('../');
+               props.requireLogin();
                return null
             }
          }
@@ -34,8 +32,9 @@ function MainSection(props) {
             console.log('error', error)
          });
    }
-   if (props.performRequest){
-   GetAllTradenotes()
+
+   if (props.performRequest) {
+      GetAllTradenotes();
    }
 
    return (
@@ -43,9 +42,7 @@ function MainSection(props) {
 
          {alltradenotes.map((tradenote) => {
             return (<TradeNote />)
-         }
-
-         )}
+         })}
 
          <TradeNote />
          <TradeNote summary={`
