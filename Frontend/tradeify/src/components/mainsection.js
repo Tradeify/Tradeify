@@ -1,51 +1,15 @@
 import React from "react";
 
 function MainSection(props) {
-var alltradenotes = []
-
-   function GetAllTradenotes() {
-      var requestOptions = {
-         method: 'GET',
-         redirect: 'follow',
-         credentials: 'include'
-      };
-
-      fetch(process.env.REACT_APP_DJANGO_API + "get_all_tradenotes", requestOptions)
-         .then(response => {
-            console.log(response)
-            if (response.status === 200) {
-               return response.json()
-            } else if (response.status === 401) {
-               props.spc(false);
-               props.path('../');
-               props.requireLogin();
-               return null
-            }
-         }
-
-         )
-         .then(result => {
-            alltradenotes = result.Tradenotes
-            console.log(alltradenotes)
-         })
-         .catch(error => {
-            console.log('error', error)
-         });
-   }
-
-   if (props.performRequest) {
-      GetAllTradenotes(); 
-   }
-
    return (
       <div className="p-4 mainSection">
 
-         {alltradenotes.map((tradenote) => {
+         {props.alltradenotes.map((tradenote) => {
             console.log(tradenote)
-            return (<TradeNote summary={tradenote.summary}/>)
+            return (<TradeNote summary={tradenote.summary} />)
          })}
 
-     
+
       </div>
    );
 }

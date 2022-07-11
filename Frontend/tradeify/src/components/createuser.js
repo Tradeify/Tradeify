@@ -32,9 +32,9 @@ class CreateUser extends React.Component {
                   <input type='password' className="rounded-md border-2 border-black p-1" name="password" />
                </label>
                <div className="flex flex-row justify-evenly py-3">
-                  <button className="rounded-md border-2 border-black w-24">Register</button>
+                  <button className="rounded-md border-2 border-black w-24 hover:bg-red-700">Register</button>
                   <Link to='/login'>
-                     <button className="rounded-md border-2 border-black w-36" >Log In</button>
+                     <button className="rounded-md border-2 border-black w-36 hover:bg-green-700" >Log In</button>
                   </Link>
                </div>
             </form>

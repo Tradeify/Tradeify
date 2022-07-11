@@ -50,9 +50,9 @@ function Login(props) {
             </label>
             {loginError ? <label className="w-fit-content text-red-500">Error logging in. Please check your credentials</label> : null}
             <div className="flex flex-row justify-evenly py-3">
-               <button className="rounded-md border-2 border-black w-24" onClick={logUserIn}>Log In</button>
+               <button className="rounded-md border-2 border-black w-24 hover:bg-red-700" onClick={logUserIn}>Log In</button>
                <Link to='/createuser'>
-                  <button className="rounded-md border-2 border-black w-36">Create Account</button>
+                  <button className="rounded-md border-2 border-black w-36 hover:bg-green-700">Create Account</button>
                </Link>
             </div>
          </form>
