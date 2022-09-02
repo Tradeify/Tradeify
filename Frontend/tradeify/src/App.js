@@ -8,30 +8,31 @@ import Sidebar from './components/sidebar';
 import NavBar from './components/navbar';
 import MainSection from './components/mainsection'
 import ForceLoginModal from './components/forceLoginModal'
+import useTradenoteStore from './globalStates/tradenoteState';
 import './App.css';
+import PageSwitcher from './components/pageswitcher';
+import NewTradenote from './components/newtradenote';
 
 Modal.setAppElement('#root');
 
 function App() {
   let navigate = useNavigate();
+  const [isLoggedIn, setLogin] = React.useState(false);
   const [user, setUser] = React.useState(null);
-  const [modalOpen, setModalOpen] = React.useState(false);
-
-  function openLoginModal() {
-    setModalOpen(true);
-  }
+  const tradenotes = useTradenoteStore((state) => state.tradenotes);
+  const setTradenotes = useTradenoteStore((state) => state.setTradenotes);
 
   function onLoginSuccess(user) {
     setUser(user);
-    closeLoginModal();
-    navigate('../');
+    navigate('../app');
+    GetAllTradenotes()
   }
 
-  function closeLoginModal() {
-    setModalOpen(false);
+  function onLoginAction() {
+    navigate('../login')
+    setLogin(true);
   }
 
-  //// Get All Tradenotes
   function GetAllTradenotes() {
     var requestOptions = {
       method: 'GET',
@@ -49,8 +50,7 @@ function App() {
         }
       })
       .then(result => {
-        console.log(result)
-        return result;
+        setTradenotes(result.Tradenotes);
       })
       .catch(error => {
         console.log('error', error)
@@ -64,26 +64,24 @@ function App() {
       <div className='flex flex-col items-center w-full'>
         <NavBar title={'All Tradenotes'} />
         {
-          user == null ?
-            <ForceLoginModal onLoginAction={openLoginModal} /> :
-            <MainSection alltradenotes={[]} />
+          /* isLoggedIn */ true ?
+            <Routes>
+              <Route path='/' element={<PageSwitcher />}>
+                <Route path="/login" element={<Login onLoginSuccess={onLoginSuccess} />} />
+                <Route path='/createuser' element={<CreateUser onCreateSuccess={onLoginSuccess} />} />
+                <Route path='/app' element={<PageSwitcher />}>
+                  <Route path='' element={<MainSection tradenotes={tradenotes} />} />
+                  <Route path='new' element={<NewTradenote />} />
+                </Route>
+              </Route>
+            </Routes>
+            :
+            <ForceLoginModal onLoginAction={onLoginAction} />
         }
       </div>
-      <Modal
-        className='w-96 h-fit-content bg-white rounded-md flex flex-col justify-center'
-        overlayClassName='fixed inset-0 w-full flex flex-row justify-center items-center backgroundwithOpacity'
-        isOpen={modalOpen}
-        onAfterOpen={null}
-        onRequestClose={null}
-        contentLabel="Login"
-      >
-        <Routes>
-          <Route path="/login" element={<Login onLoginSuccess={onLoginSuccess} />} />
-          <Route path='/createuser' element={<CreateUser onCreateSuccess={onLoginSuccess} />} />
-        </Routes>
-      </Modal>
     </div>
   );
 }
+
 
 export default App;

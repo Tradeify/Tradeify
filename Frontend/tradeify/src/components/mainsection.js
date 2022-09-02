@@ -4,9 +4,9 @@ function MainSection(props) {
    return (
       <div className="p-4 mainSection">
 
-         {props.alltradenotes.map((tradenote) => {
-            console.log(tradenote)
-            return (<TradeNote summary={tradenote.summary} />)
+         {props.tradenotes.map((notes) => {
+            console.log(notes)
+            return (<TradeNote summary={notes.summary} />)
          })}
 
 

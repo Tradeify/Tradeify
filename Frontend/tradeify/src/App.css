@@ -43,6 +43,14 @@
     }
 }
 
+.validField {
+    border-color: green;
+}
+
+.invalidField {
+    border-color: red;
+}
+
 @media only screen and (min-width: 641px) and (max-width: 1007px) {
     .sidebar {
         width: 300px;

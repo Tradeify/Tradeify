@@ -19,7 +19,6 @@ function Login(props) {
       fetch(process.env.REACT_APP_DJANGO_API + "login_user", requestOptions)
          .then(response => response.json())
          .then(result => {
-            console.log(result)
             if (result.username) {
                setLoginError(false)
                props.onLoginSuccess(result)
@@ -34,7 +33,7 @@ function Login(props) {
    }
 
    return (
-      <div className="w-full py-2 px-5 h-full">
+      <div className="w-96 py-2 px-5">
          <form id="loginForm" name='loginForm' className="flex flex-col h-full">
             <AccountCircleIcon style={{
                fontSize: '120px',
