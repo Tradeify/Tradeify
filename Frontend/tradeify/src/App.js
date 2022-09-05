@@ -33,6 +33,22 @@ function App() {
     setLogin(true);
   }
 
+  function getPageTitle() {
+    switch (window.location.pathname) {
+      case "/app/new":
+        return "Add Tradenote"
+      case "/app":
+        return "All Tradenotes"
+      case "/login":
+        return "Login";
+      case "/createuser":
+        return "Create User";
+
+      default:
+        break;
+    }
+  }
+
   function GetAllTradenotes() {
     var requestOptions = {
       method: 'GET',
@@ -62,7 +78,7 @@ function App() {
     <div className="App flex flex-row">
       <Sidebar user={user}></Sidebar>
       <div className='flex flex-col items-center w-full'>
-        <NavBar title={'All Tradenotes'} />
+        <NavBar title={getPageTitle()} />
         {
           /* isLoggedIn */ true ?
             <Routes>
