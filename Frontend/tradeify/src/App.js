@@ -77,7 +77,7 @@ function App() {
   return (
     <div className="App flex flex-row">
       <Sidebar user={user}></Sidebar>
-      <div className='flex flex-col items-center w-full'>
+      <div className='flex flex-col items-center pageSection'>
         <NavBar title={getPageTitle()} />
         {
           /* isLoggedIn */ true ?

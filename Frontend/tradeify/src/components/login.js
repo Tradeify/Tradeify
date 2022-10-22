@@ -1,23 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import api from "../api";
 
 function Login(props) {
    const [loginError, setLoginError] = React.useState(false);
 
    function logUserIn(e) {
       e.preventDefault()
-      var formdata = new FormData(document.getElementById('loginForm'));
 
-      var requestOptions = {
-         method: 'POST',
-         body: formdata,
-         redirect: 'follow',
-         credentials: 'include'
-      };
-
-      fetch(process.env.REACT_APP_DJANGO_API + "login_user", requestOptions)
-         .then(response => response.json())
+      api.login(new FormData(document.getElementById('loginForm')))
          .then(result => {
             if (result.username) {
                setLoginError(false)

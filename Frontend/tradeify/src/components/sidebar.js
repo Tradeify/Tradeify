@@ -26,10 +26,10 @@ class Sidebar extends React.Component {
 class ProfileSection extends React.Component {
     render() {
         return (
-            <div className='flex flex-col justify-between'>
+            <div className='flex flex-col justify-between items-center'>
                 <div className='flex flex-row justify-between items-center'>
-                    <a href='/'><img src="tradeify_icon.svg" alt="logo" /></a>
-                    <div className='flex flex-row'>
+                    <a className="mx-4" href='/app'><img className="w-7" src="/tradeify_icon.svg" alt="logo" /></a>
+                    <div className='flex flex-row justify-between items-center'>
                         <div className="initialsLogo text-xs items-center flex flex-row">{this.props.initials}</div>
                         <div className='flex flex-row p-2 text-xs h-fit'>{this.props.name}</div>
                     </div>

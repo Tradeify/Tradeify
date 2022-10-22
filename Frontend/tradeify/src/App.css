@@ -19,8 +19,11 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 20px 10px;
-
     overflow-y: auto;
+}
+
+.sidebar {
+    background-color: rgba(204, 232, 208, 0.75);
 }
 
 .backgroundwithOpacity {
@@ -31,15 +34,16 @@
     .sidebar {
         width: 300px;
         height: 100%;
-        padding-left: 16px;
-        padding-right: 16px;
-
         overflow: hidden;
     }
 
     .mainSection {
         grid-template-columns: repeat(5, 1fr);
         width: fit-content;
+    }
+
+    .pageSection {
+        width: 100%;
     }
 }
 
@@ -53,14 +57,17 @@
 
 @media only screen and (min-width: 641px) and (max-width: 1007px) {
     .sidebar {
-        width: 400px;
+        width: 25%;
         height: 100%;
-
         overflow: hidden;
     }
 
     .mainSection {
         grid-template-columns: repeat(4, 1fr);
         width: fit-content;
+    }
+
+    .pageSection {
+        width: 75%;
     }
 }

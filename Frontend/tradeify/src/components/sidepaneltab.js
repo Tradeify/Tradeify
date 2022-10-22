@@ -63,18 +63,20 @@ export default function SidePanelTab() {
                 </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
-                <SidePanelItem spitemtitle={'All Tradenotes'} spitemsubtitle={'Add, Edit, Preview'}
-                    className={'bg-purple-900 text-white'}>
-                    <InsertDriveFileIcon />
-                </SidePanelItem>
-                <SidePanelItem spitemtitle={'Favorites'} spitemsubtitle={'Easy Access'}
-                    className={'bg-[#FF9F0E] text-white'}>
-                    <StarIcon />
-                </SidePanelItem>
-                <SidePanelItem spitemtitle={'Trash'} spitemsubtitle={'Recover Files'}
-                    className={'bg-[#EB0000] text-white'}>
-                    <DeleteIcon />
-                </SidePanelItem>
+                <div className="px-4">
+                    <SidePanelItem spitemtitle={'All Tradenotes'} spitemsubtitle={'Add, Edit, Preview'}
+                        className={'bg-purple-900 text-white'}>
+                        <InsertDriveFileIcon />
+                    </SidePanelItem>
+                    <SidePanelItem spitemtitle={'Favorites'} spitemsubtitle={'Easy Access'}
+                        className={'bg-[#FF9F0E] text-white'}>
+                        <StarIcon />
+                    </SidePanelItem>
+                    <SidePanelItem spitemtitle={'Trash'} spitemsubtitle={'Recover Files'}
+                        className={'bg-[#EB0000] text-white'}>
+                        <DeleteIcon />
+                    </SidePanelItem>
+                </div>
             </TabPanel>
             <TabPanel value={value} index={1}>
                 Item Two
