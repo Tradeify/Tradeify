@@ -18,13 +18,12 @@ function createNewTradenote(body) {
       credentials: 'include'
    };
 
-   return (fetch(process.env.REACT_APP_DJANGO_API + "create_tradenote", requestOptions)
-      .then(response => response.json()))
+   return (fetch(process.env.REACT_APP_DJANGO_API + "create_tradenote", requestOptions))
 }
 
-class api {
-   login = login
-   createNewTradenote = createNewTradenote
+const api = {
+   login: login,
+   createNewTradenote: createNewTradenote
 }
 
-export default { api }
+export default api
